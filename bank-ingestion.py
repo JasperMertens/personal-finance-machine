@@ -1,28 +1,39 @@
+import pdb
 import sys
 import csv
+import os
 
-raw_csv_file=sys.argv[1]
-CSV_SEP=","
-transaction_rows = []
-with open(raw_csv_file) as f:
-    reader=csv.reader(f)
+# This file reads in the given csv file with raw bank
+# transaction data and outputs a formatted csv file.
+
+# The input and output format for the fields.
+input_fields = [
+        "Rekening", "Boekdatum",
+        "Valutadatum", "Referentie",
+        "Beschrijving", "Bedrag",
+        "Munt", "Verrichtingsdatum",
+        "Rekening tegenpartij", "Naam tegenpartij",
+        "Mededeling"]
+output_fields = [
+        "Referentie", "Verrichtingsdatum",
+        "Bedrag", "Munt",
+        "Naam tegenpartij", "Rekening tegenpartij",
+        "Mededeling"]
+
+raw_path = "./../Raw_data/2019/" + sys.argv[1] + "/"
+format_path = "./../Formatted_data/2019/" + sys.argv[1] + "/"
+raw_csv_file = raw_path + os.listdir(raw_path)[0]
+formatted_csv_file = format_path + os.listdir(raw_path)[0]
+CSV_SEP=";"
+with open(raw_csv_file) as in_f, \
+    open(formatted_csv_file, "w") as out_f:
+    reader=csv.DictReader(in_f, fieldnames=input_fields,
+        delimiter=CSV_SEP)
+    # Create a writer that writes the data in the order of output_fields
+    # other keys provided are ignored.
+    writer=csv.DictWriter(out_f, fieldnames=output_fields,
+        delimiter=CSV_SEP, extrasaction="ignore")
+    next(reader, None) # Skip header line
+    writer.writeheader()
     for row in reader:
-        transaction_rows.append(row)
-
-transaction_outputs=[]
-# remove header rows
-for line in transaction_rows[3:]:
-    date = line[0].split('/')
-    day = date[0]
-    month = date[1]
-    year = date[2]
-    
-    datestring="-".join([year, month, day])
-    new_tr = [datestring]+line[1:9]
-
-    transaction_outputs.append(new_tr)
-
-with open('bank-transactions.csv', 'w+') as f:
-    wr = csv.writer(f)
-    for t in transaction_outputs:
-        wr.writerow(t)
+        writer.writerow(row)
