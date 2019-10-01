@@ -20,11 +20,17 @@ output_fields = [
         "Naam tegenpartij", "Rekening tegenpartij",
         "Mededeling"]
 
+if len(sys.argv) > 1:
+    month = sys.argv[1]
+else:
+    raise Exception("""No arguments provided.
+            Provide the month as a number as argument.""")
+
 raw_path = "./../Raw_data/2019/" + sys.argv[1] + "/"
 format_path = "./../Formatted_data/2019/" + sys.argv[1] + "/"
 raw_csv_file = raw_path + os.listdir(raw_path)[0]
 formatted_csv_file = format_path + os.listdir(raw_path)[0]
-CSV_SEP=","
+CSV_SEP=";"
 with open(raw_csv_file, "rb") as in_f, \
     open(formatted_csv_file, "wb") as out_f:
     reader=csv.DictReader(in_f, fieldnames=input_fields,
