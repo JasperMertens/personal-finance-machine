@@ -40,6 +40,6 @@ with open(raw_csv_file, "rb") as in_f, \
     writer=csv.DictWriter(out_f, fieldnames=output_fields,
         delimiter=CSV_SEP, extrasaction="ignore")
     next(reader, None) # Skip header line
-    writer.writeheader()
+    # writer.writeheader() # Don't write header
     for row in reader:
         writer.writerow(row)
