@@ -10,7 +10,7 @@ create table if not exists nw_tx (id text primary key,
 
 /* Import the data */
 .separator ';'
-.import ../Formatted_data/2019/09/Argenta_BE02973118990540_2019-09-27_233911.csv nw_tx
+.import ../Formatted_data/2019/09/Argenta_BE02973118990540_2019-09-30_004212.csv nw_tx
 
 /*.import glob '../Formatted_data/2019/09/*.csv' nw_tx*/
 
