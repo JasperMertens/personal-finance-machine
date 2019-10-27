@@ -15,7 +15,7 @@ SELECT category,100*SUM(amount)/(SELECT SUM(amount) FROM nw_tx WHERE amount<0 AN
 .print 'spending percentages by category by month:'
 SELECT category,100*SUM(amount)/(SELECT SUM(amount) FROM nw_tx WHERE amount<0 AND date > date('now', 'start of month', '-2 month') and date < date('now', 'start of month', '-1 month')) FROM nw_tx where date > date('now', 'start of month', '-2 month') and date < date('now', 'start of month', '-1 month') GROUP BY category;
 
--- category queries comparing agsint yearly averages
+-- category queries comparing against yearly averages
 .print ''
 .print 'difference between last month and yearly average:' 
 SELECT nw_transactions.category,(total/12 - SUM(amount)) FROM nw_tx JOIN totals on totals.category = nw_transactions.category where date >= date('now', 'start of month', '-2 month') and date < date('now', 'start of month', '-1 month') GROUP BY nw_transactions.category;
