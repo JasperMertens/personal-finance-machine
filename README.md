@@ -17,6 +17,12 @@ Categorisation not included here. Write your own statements to populate the *cat
 
 ## Run
 
-`./run.sh <transactions csv file>`
+`./run.sh <number of the month>`
+eg. : `./run.sh 09`
 
 This initialises the database in *transactions.db* and runs the queries. This is so you can run more queries afterwards! E.g. `sqlite3 transactions.db < query.sql`. Otherwise, you should clean up the database after you run this
+
+To execute commands on the current database:
+`sqlite3 transactions.db`
+Sql files can be run with the .read command at this stage.
+

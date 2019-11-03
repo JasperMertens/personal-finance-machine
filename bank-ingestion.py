@@ -25,13 +25,15 @@ else:
     raise Exception("""No arguments provided.
             Provide the month as a number as argument.""")
 
-raw_path = "./../Raw_data/2019/" + sys.argv[1] + "/"
-format_path = "./../Formatted_data/2019/" + sys.argv[1] + "/"
+raw_path = "./../Raw_data/2019/" + month + "/"
+format_path = "./../Formatted_data/2019/" + month + "/"
 raw_csv_file = raw_path + os.listdir(raw_path)[0]
 formatted_csv_file = format_path + os.listdir(raw_path)[0]
 CSV_SEP=";"
-with open(raw_csv_file, "rb") as in_f, \
-    open(formatted_csv_file, "wb") as out_f:
+# newline='' needed for python3
+# In python2 "rb" and "wb" can be used.
+with open(raw_csv_file, "r") as in_f, \
+    open(formatted_csv_file, "w", newline='') as out_f:
     reader=csv.DictReader(in_f, fieldnames=input_fields,
         delimiter=CSV_SEP)
     # Create a writer that writes the data in the

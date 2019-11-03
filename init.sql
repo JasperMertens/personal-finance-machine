@@ -19,7 +19,7 @@ create table if not exists subcategories
 	    on delete set null
        );
 
-create table if not exists nw_tx
+create table if not exists transactions
        (
 	id          text, date        text,
 	amount      real, currency    text,
@@ -58,13 +58,5 @@ insert into subcategories
          ("Drinks", "Activity"),
          ("Cinema", "Activity");
 
-/* Import the data */
-.separator ';'
-.import ../Formatted_data/2019/09/Argenta_BE02973118990540_2019-09-27_233911.csv nw_tx
-
-/*.import glob '../Formatted_data/2019/09/*.csv' nw_tx*/
-
-/*.read categorise.sql*/
-
-create table if not exists totals (category text, total real);
-INSERT INTO totals SELECT category,SUM(amount) FROM nw_tx GROUP BY category;
+create table if not exists totals
+  (category text, total real);
